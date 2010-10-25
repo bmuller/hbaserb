@@ -7,7 +7,10 @@ Gem::Specification.new do |s|
   s.summary = "Simple lib for interfaceing with HBase via Ruby and Thrift."
   s.email = "bamuller@gmail.com"
   s.files = [
-    "lib/hbaserb.rb"
+    "lib/hbaserb.rb",
+    "lib/thrift/hbase.rb",
+    "lib/thrift/hbase_constants.rb",
+    "lib/thrift/hbase_types.rb"
   ]
   s.homepage = "http://github.com/bmuller/hbaserb"
   s.require_paths = ["lib"]
