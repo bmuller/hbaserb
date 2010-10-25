@@ -1,0 +1,4 @@
+= hbaserb -- HBase Thrift interface for Ruby
+
+A Ruby thrift lib for interfacing with Hadoop's HBase
+
