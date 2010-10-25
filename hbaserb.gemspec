@@ -8,6 +8,10 @@ Gem::Specification.new do |s|
   s.email = "bamuller@gmail.com"
   s.files = [
     "lib/hbaserb.rb",
+    "lib/hbaserb/client.rb",
+    "lib/hbaserb/exceptions.rb",
+    "lib/hbaserb/scanner.rb",
+    "lib/hbaserb/table.rb",
     "lib/thrift/hbase.rb",
     "lib/thrift/hbase_constants.rb",
     "lib/thrift/hbase_types.rb"

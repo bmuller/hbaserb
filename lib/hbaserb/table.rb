@@ -35,6 +35,11 @@ module HBaseRb
       call :atomicIncrement row, column, value
     end
 
+    def create_scanner(row, *columns)
+      sid = call :scannerOpen, row, columns
+      Scanner.new @client, sid
+    end
+
     private
     def call(method, *args)
       @client.send method, @name, *args
