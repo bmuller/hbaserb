@@ -36,7 +36,7 @@ module HBaseRb
     end
 
     def atomic_increment(row, column, value=1)
-      call :atomicIncrement row, column, value
+      call :atomicIncrement, row, column, value
     end
 
     def create_scanner(row, *columns)
