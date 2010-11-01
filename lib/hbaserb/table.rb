@@ -27,6 +27,10 @@ module HBaseRb
       call :deleteTable
     end
 
+    def delete_row(row)
+      call :deleteAllRow, row
+    end
+
     def delete_cells(row, column)
       call :deleteAll, row, column
     end
@@ -38,6 +42,13 @@ module HBaseRb
     def create_scanner(row, *columns)
       sid = call :scannerOpen, row, columns
       Scanner.new @client, sid
+    end
+
+    # mutations is a key / value pair to insert / update for the given row
+    # the keys are in the form "family:column"
+    def mutate_row(row, mutations)
+      mutations.map! { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v) }
+      call :mutateRow, row, mutations
     end
 
     private
