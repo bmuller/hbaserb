@@ -2,3 +2,26 @@
 
 A Ruby thrift lib for interfacing with Hadoop's HBase
 
+== Basic Usage
+  require 'rubygems'
+  require 'hbaserb'
+ 
+  client = HBaseRb::Client.new 'localhost'
+
+  # create table with two column families
+  table = client.create_table "test_table", "colfamone", "colfamtwo"
+
+  # insert some data
+  table.mutate_row 'myrow', {'colfamone:myvalue' => 'awesome value'}
+
+  # get it
+  puts t.get('myrow', 'colone:myvalue').first.value
+
+  # get timestamp
+  puts t.get('myrow', 'colone:myvalue').first.timestamp
+
+  # make a scanner
+  s = t.create_scanner 'myrow', 'colfamnone'
+
+  # get first row
+  puts s.nextRow
