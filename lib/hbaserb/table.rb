@@ -15,11 +15,17 @@ module HBaseRb
     end
 
     def get(row, column)
-      call :get, row, column
+      call :get, row.to_s, column
+    end
+
+    # get the last value for the given row / column
+    def get_last(row, column, default=nil)
+      r = get(row, column)
+      (r.length > 0) ? r.first.value : default
     end
 
     def get_row(row)
-      call :getRow, row
+      call :getRow, row.to_s
     end
     
     def delete
@@ -28,20 +34,20 @@ module HBaseRb
     end
 
     def delete_row(row)
-      call :deleteAllRow, row
+      call :deleteAllRow, row.to_s
     end
 
     def delete_cells(row, column)
-      call :deleteAll, row, column
+      call :deleteAll, row.to_s, column
     end
 
     def atomic_increment(row, column, value=1)
-      call :atomicIncrement, row, column, value
+      call :atomicIncrement, row.to_s, column, value
     end
 
-    def create_scanner(row, *columns)
-      sid = call :scannerOpen, row, columns
-      Scanner.new @client, sid
+    def create_scanner(row, *columns, &block)
+      sid = call :scannerOpen, row.to_s, columns
+      Scanner.new @client, sid, &block
     end
 
     # mutations is a key / value pair to insert / update for the given row

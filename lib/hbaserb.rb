@@ -3,6 +3,7 @@ require 'hbaserb/client.rb'
 require 'hbaserb/exceptions.rb'
 require 'hbaserb/table.rb'
 require 'hbaserb/scanner.rb'
+require 'hbaserb/extensions.rb'
 
 $:.unshift File.join(File.dirname(__FILE__), 'thrift')
 require 'hbase.rb'

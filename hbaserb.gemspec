@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
     "lib/hbaserb.rb",
     "lib/hbaserb/client.rb",
     "lib/hbaserb/exceptions.rb",
+    "lib/hbaserb/extensions.rb",
     "lib/hbaserb/scanner.rb",
     "lib/hbaserb/table.rb",
     "lib/thrift/hbase.rb",
