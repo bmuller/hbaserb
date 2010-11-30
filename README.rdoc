@@ -2,6 +2,9 @@
 
 A Ruby thrift lib for interfacing with Hadoop's HBase
 
+To install:
+  gem install hbaserb
+
 == Basic Usage
   require 'rubygems'
   require 'hbaserb'
