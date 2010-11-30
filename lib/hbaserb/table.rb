@@ -45,7 +45,10 @@ module HBaseRb
       call :atomicIncrement, row.to_s, column, value
     end
 
-    def create_scanner(row, *columns, &block)
+    # pass in no params to scan whole table
+    def create_scanner(row=nil, *columns, &block)
+      row ||= ""
+      columns = (columns.length > 0) ? columns : column_families.keys 
       sid = call :scannerOpen, row.to_s, columns
       Scanner.new @client, sid, &block
     end
@@ -55,6 +58,15 @@ module HBaseRb
     def mutate_row(row, mutations)
       mutations = mutations.map { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v) }
       call :mutateRow, row, mutations
+    end
+
+    def to_s
+      s = ""
+      create_scanner { |r|
+        cols = r.columns.map { |k,v| "#{k}: #{v.value}" }.join(", ")
+        s += "#{r.row}: #{cols}\n"
+      }
+      s
     end
 
     private

@@ -3,9 +3,9 @@ module HBaseRb
   class Client
     def initialize(server, port=9090)
       socket = Thrift::Socket.new(server, port)
-      transport = Thrift::BufferedTransport.new(socket)
-      transport.open
-      protocol = Thrift::BinaryProtocol.new(transport)
+      @transport = Thrift::BufferedTransport.new(socket)
+      @transport.open
+      protocol = Thrift::BinaryProtocol.new(@transport)
       @client = Apache::Hadoop::Hbase::Thrift::Hbase::Client.new(protocol)
     end
 
@@ -26,6 +26,10 @@ module HBaseRb
       column_family_names.map! { |name| Apache::Hadoop::Hbase::Thrift::ColumnDescriptor.new(:name => name) }
       @client.createTable tablename, column_family_names
       get_table tablename
+    end
+
+    def close
+      @transport.close
     end
 
   end

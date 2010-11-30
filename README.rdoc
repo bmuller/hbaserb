@@ -15,13 +15,16 @@ A Ruby thrift lib for interfacing with Hadoop's HBase
   table.mutate_row 'myrow', {'colfamone:myvalue' => 'awesome value'}
 
   # get it
-  puts t.get('myrow', 'colone:myvalue').first.value
+  puts t.get('myrow', 'colfamone:myvalue').first.value
 
   # get timestamp
-  puts t.get('myrow', 'colone:myvalue').first.timestamp
+  puts t.get('myrow', 'colfamone:myvalue').first.timestamp
+
+  # convert binary value to 64 bit integer
+  t.atomic_increment('myrow', 'colfamtwo:counter')
+  puts t.get('myrow', 'colfamtwo:counter').first.to_i64
 
   # make a scanner
-  s = t.create_scanner 'myrow', 'colfamnone'
-
-  # get first row
-  puts s.nextRow
+  s = t.create_scanner('myrow', 'colfamnone') { |row|
+    puts "Columns: #{row.columns.keys}"
+  } 

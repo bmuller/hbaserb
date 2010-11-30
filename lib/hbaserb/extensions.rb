@@ -29,6 +29,7 @@ module Apache
           def to_double
             value.unpack('G').first
           end
+          
         end
 
 
