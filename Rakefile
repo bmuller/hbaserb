@@ -24,9 +24,9 @@ end
 
 spec = Gem::Specification.new do |s|
   s.name = "hbaserb"
-  s.version = "0.0.2"
+  s.version = "0.0.3"
   s.authors = ["Brian Muller"]
-  s.date = %q{2010-11-30}
+  s.date = %q{2010-12-03}
   s.description = "HBase Thrift interface for Ruby"
   s.summary = "Simple lib for interfaceing with HBase via Ruby and Thrift."
   s.email = "brian.muller@livingsocial.com"
