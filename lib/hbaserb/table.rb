@@ -56,7 +56,7 @@ module HBaseRb
     # mutations is a key / value pair to insert / update for the given row
     # the keys are in the form "family:column"
     def mutate_row(row, mutations)
-      mutations = mutations.map { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v) }
+      mutations = mutations.map { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v, :isDelete => v.nil?) }
       call :mutateRow, row, mutations
     end
 
