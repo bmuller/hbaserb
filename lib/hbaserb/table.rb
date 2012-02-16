@@ -53,6 +53,16 @@ module HBaseRb
       Scanner.new @client, sid, &block
     end
 
+    def create_scanner_with_filter(row=nil, filter=nil, *columns, &block)
+      columns = (columns.length > 0) ? columns : column_families.keys 
+
+      scan = Apache::Hadoop::Hbase::Thrift::TScan.new(:filterString => filter, 
+        :startRow => row.to_s, :stopRow => row.to_s, :columns => columns)
+
+      sid = call :scannerOpenWithScan, scan
+      Scanner.new @client, sid, &block
+    end
+
     # mutations is a key / value pair to insert / update for the given row
     # the keys are in the form "family:column"
     def mutate_row(row, mutations)
