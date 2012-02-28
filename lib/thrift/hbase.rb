@@ -488,22 +488,6 @@ require 'hbase_types'
                               return
                             end
 
-                            def scannerOpenWithScan(tableName, scan)
-                              send_scannerOpenWithScan(tableName, scan)
-                              return recv_scannerOpenWithScan()
-                            end
-
-                            def send_scannerOpenWithScan(tableName, scan)
-                              send_message('scannerOpenWithScan', ScannerOpenWithScan_args, :tableName => tableName, :scan => scan)
-                            end
-
-                            def recv_scannerOpenWithScan()
-                              result = receive_message(ScannerOpenWithScan_result)
-                              return result.success unless result.success.nil?
-                              raise result.io unless result.io.nil?
-                              raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'scannerOpenWithScan failed: unknown result')
-                            end
-
                             def scannerOpen(tableName, startRow, columns)
                               send_scannerOpen(tableName, startRow, columns)
                               return recv_scannerOpen()
@@ -981,17 +965,6 @@ require 'hbase_types'
                                 result.io = io
                               end
                               write_result(result, oprot, 'deleteAllRowTs', seqid)
-                            end
-
-                            def process_scannerOpenWithScan(seqid, iprot, oprot)
-                              args = read_args(iprot, ScannerOpenWithScan_args)
-                              result = ScannerOpenWithScan_result.new()
-                              begin
-                                result.success = @handler.scannerOpenWithScan(args.tableName, args.scan)
-                              rescue Apache::Hadoop::Hbase::Thrift::IOError => io
-                                result.io = io
-                              end
-                              write_result(result, oprot, 'scannerOpenWithScan', seqid)
                             end
 
                             def process_scannerOpen(seqid, iprot, oprot)
@@ -2246,44 +2219,6 @@ require 'hbase_types'
                             IO = 1
 
                             FIELDS = {
-                              IO => {:type => ::Thrift::Types::STRUCT, :name => 'io', :class => Apache::Hadoop::Hbase::Thrift::IOError}
-                            }
-
-                            def struct_fields; FIELDS; end
-
-                            def validate
-                            end
-
-                            ::Thrift::Struct.generate_accessors self
-                          end
-
-                          class ScannerOpenWithScan_args
-                            include ::Thrift::Struct, ::Thrift::Struct_Union
-                            TABLENAME = 1
-                            SCAN = 2
-
-                            FIELDS = {
-                              # name of table
-                              TABLENAME => {:type => ::Thrift::Types::STRING, :name => 'tableName', :binary => true},
-                              # Scan instance
-                              SCAN => {:type => ::Thrift::Types::STRUCT, :name => 'scan', :class => Apache::Hadoop::Hbase::Thrift::TScan}
-                            }
-
-                            def struct_fields; FIELDS; end
-
-                            def validate
-                            end
-
-                            ::Thrift::Struct.generate_accessors self
-                          end
-
-                          class ScannerOpenWithScan_result
-                            include ::Thrift::Struct, ::Thrift::Struct_Union
-                            SUCCESS = 0
-                            IO = 1
-
-                            FIELDS = {
-                              SUCCESS => {:type => ::Thrift::Types::I32, :name => 'success'},
                               IO => {:type => ::Thrift::Types::STRUCT, :name => 'io', :class => Apache::Hadoop::Hbase::Thrift::IOError}
                             }
 

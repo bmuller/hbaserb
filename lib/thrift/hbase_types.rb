@@ -150,33 +150,6 @@ module Apache
                   ::Thrift::Struct.generate_accessors self
                 end
 
-                # A Scan object is used to specify scanner parameters when opening a scanner.
-                class TScan
-                  include ::Thrift::Struct, ::Thrift::Struct_Union
-                  STARTROW = 1
-                  STOPROW = 2
-                  TIMESTAMP = 3
-                  COLUMNS = 4
-                  CACHING = 5
-                  FILTERSTRING = 6
-
-                  FIELDS = {
-                    STARTROW => {:type => ::Thrift::Types::STRING, :name => 'startRow', :binary => true, :optional => true},
-                    STOPROW => {:type => ::Thrift::Types::STRING, :name => 'stopRow', :binary => true, :optional => true},
-                    TIMESTAMP => {:type => ::Thrift::Types::I64, :name => 'timestamp', :optional => true},
-                    COLUMNS => {:type => ::Thrift::Types::LIST, :name => 'columns', :element => {:type => ::Thrift::Types::STRING, :binary => true}, :optional => true},
-                    CACHING => {:type => ::Thrift::Types::I32, :name => 'caching', :optional => true},
-                    FILTERSTRING => {:type => ::Thrift::Types::STRING, :name => 'filterString', :binary => true, :optional => true}
-                  }
-
-                  def struct_fields; FIELDS; end
-
-                  def validate
-                  end
-
-                  ::Thrift::Struct.generate_accessors self
-                end
-
                 # An IOError exception signals that an error occurred communicating
                 # to the Hbase master or an Hbase region server.  Also used to return
                 # more general Hbase error conditions.
