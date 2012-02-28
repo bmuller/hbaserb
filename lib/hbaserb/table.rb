@@ -49,13 +49,7 @@ module HBaseRb
     def create_scanner(start_row=nil, end_row=nil, *columns, &block)
       columns = (columns.length > 0) ? columns : column_families.keys 
 
-      puts columns.inspect
-
-      scan = Apache::Hadoop::Hbase::Thrift::TScan.new(:startRow => start_row.to_s, 
-        :stopRow => end_row.to_s, 
-        :columns => columns)
-
-      sid = call :scannerOpenWithScan, scan
+      sid = call :scannerOpenWithStop, start_row.to_s, end_row.to_s, columns
       Scanner.new @client, sid, &block
     end
 
