@@ -46,18 +46,12 @@ module HBaseRb
     end
 
     # pass in no params to scan whole table
-    def create_scanner(row=nil, *columns, &block)
-      row ||= ""
-      columns = (columns.length > 0) ? columns : column_families.keys 
-      sid = call :scannerOpen, row.to_s, columns
-      Scanner.new @client, sid, &block
-    end
-
-    def create_scanner_with_filter(start_row=nil, end_row=nil, filter=nil, *columns, &block)
+    def create_scanner(start_row=nil, end_row=nil, *columns, &block)
       columns = (columns.length > 0) ? columns : column_families.keys 
 
-      scan = Apache::Hadoop::Hbase::Thrift::TScan.new(:filterString => filter, 
-        :startRow => start_row.to_s, :stopRow => end_row.to_s, :columns => columns)
+      scan = Apache::Hadoop::Hbase::Thrift::TScan.new(:startRow => start_row.to_s, 
+        :stopRow => end_row.to_s, 
+        :columns => columns)
 
       sid = call :scannerOpenWithScan, scan
       Scanner.new @client, sid, &block

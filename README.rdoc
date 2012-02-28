@@ -31,11 +31,7 @@ To install:
   puts t.get('myrow', 'colfamtwo:counter').first.to_i64
 
   # make a scanner
-  s = t.create_scanner('myrow', 'colfamnone') { |row|
+  s = t.create_scanner('my-start-row', 'my-end-row', 'colfamnone') { |row|
     puts "Columns: #{row.columns.keys}"
   } 
 
-  # make a scanner with a region server-based filter (see http://hbase.apache.org/book/thrift.html)
-  s = t.create_scanner_with_filter('myrow', "ColumnPrefixFilter('pb')", 'colfamnone') { |row|
-    puts "Columns: #{row.columns.keys}"
-  } 
