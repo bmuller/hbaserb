@@ -46,17 +46,17 @@ module HBaseRb
     end
 
     # pass in no params to scan whole table
-    def create_scanner(row=nil, *columns, &block)
-      row ||= ""
+    def create_scanner(start_row=nil, end_row=nil, *columns, &block)
       columns = (columns.length > 0) ? columns : column_families.keys 
-      sid = call :scannerOpen, row.to_s, columns
+
+      sid = call :scannerOpenWithStop, start_row.to_s, end_row.to_s, columns
       Scanner.new @client, sid, &block
     end
 
     # mutations is a key / value pair to insert / update for the given row
     # the keys are in the form "family:column"
     def mutate_row(row, mutations)
-      mutations = mutations.map { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v) }
+      mutations = mutations.map { |k,v| Apache::Hadoop::Hbase::Thrift::Mutation.new(:column => k, :value => v, :isDelete => v.nil?) }
       call :mutateRow, row, mutations
     end
 
