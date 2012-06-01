@@ -1,6 +1,6 @@
 = hbaserb -- HBase Thrift interface for Ruby
 
-A Ruby thrift lib for interfacing with Hadoop's HBase
+A Ruby thrift lib for interfacing with Hadoop's HBase 0.92.0
 
 To install:
   gem install hbaserb
@@ -17,6 +17,9 @@ To install:
   # insert some data
   table.mutate_row 'myrow', {'colfamone:myvalue' => 'awesome value'}
 
+  # delete some data
+  table.mutate_row 'myrow', {'colfamone:myvalue' => nil}
+
   # get it
   puts t.get('myrow', 'colfamone:myvalue').first.value
 
@@ -28,6 +31,7 @@ To install:
   puts t.get('myrow', 'colfamtwo:counter').first.to_i64
 
   # make a scanner
-  s = t.create_scanner('myrow', 'colfamnone') { |row|
+  s = t.create_scanner('my-start-row', 'my-end-row', 'colfamnone') { |row|
     puts "Columns: #{row.columns.keys}"
   } 
+
